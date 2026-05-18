@@ -154,6 +154,7 @@ bot_data = BotData()
 def is_admin(user_id: int) -> bool:
     return user_id == Config.ADMIN_ID
 
+
 def get_file_numbers(filename: str) -> List[str]:
     filepath = os.path.join(Config.NUMBERS_DIR, filename)
     if not os.path.exists(filepath):
@@ -163,6 +164,7 @@ def get_file_numbers(filename: str) -> List[str]:
             return [line.strip() for line in f if line.strip()]
     except:
         return []
+
 
 def get_all_files() -> List[Dict]:
     files = []
@@ -182,6 +184,7 @@ def get_all_files() -> List[Dict]:
             })
     return sorted(files, key=lambda x: x['modified'], reverse=True)
 
+
 def create_progress_bar(current: int, total: int, length: int = 10) -> str:
     if total == 0:
         return "[----------] 0%"
@@ -189,6 +192,18 @@ def create_progress_bar(current: int, total: int, length: int = 10) -> str:
     bar = "█" * filled + "░" * (length - filled)
     percentage = int(100 * current / total)
     return f"[{bar}] {percentage}%"
+
+
+def format_phone(number: str) -> str:
+    number = number.strip()
+
+    if number.startswith("+"):
+        return number
+
+    if number.startswith("00"):
+        return "+" + number[2:]
+
+    return "+" + number
 
 # ============== OTP Processing (Using Requests - No Browser Needed) ==============
 async def process_single_number(phone_number: str) -> dict:
@@ -216,7 +231,7 @@ async def process_single_number(phone_number: str) -> dict:
 }
         
         check_data = {
-            "username": f"+2{phone_number}",
+            "username": format_phone(phone_number),
             "isOtherIdpSupported": True,
             "checkPhones": True,
             "isRemoteNGCSupported": True,
