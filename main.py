@@ -10,7 +10,7 @@ from typing import List, Dict
 # ============== Setup App Directory ==============
 APP_DIR = os.path.dirname(os.path.abspath(__file__))
 if not os.access(APP_DIR, os.W_OK):
-    APP_DIR = os.path.join(os.path.expanduser("\~"), "microsoft_bot")
+    APP_DIR = os.path.join(os.path.expanduser("~"), "microsoft_bot")
 
 os.makedirs(APP_DIR, exist_ok=True)
 os.chdir(APP_DIR)
@@ -325,9 +325,7 @@ def main():
 
     app.add_handler(CommandHandler("start", start_command))
     app.add_handler(CallbackQueryHandler(button_handler))
-    app.add_handler(MessageHandler(filters.Document.TEXT, handle_file_upload))
-    app.add_handler(MessageHandler(filters.TEXT & \~filters.COMMAND, handle_text_message))
-
+    app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, handle_text_message))
     app.run_polling()
 
 if __name__ == "__main__":
