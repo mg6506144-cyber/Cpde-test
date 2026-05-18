@@ -206,12 +206,14 @@ async def process_single_number(phone_number: str) -> dict:
         session = requests.Session()
         
         headers = {
-            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
-            'Accept': 'application/json',
-            'Content-Type': 'application/json; charset=UTF-8',
-            'Origin': 'https://account.microsoft.com',
-            'Referer': 'https://account.microsoft.com/security/',
-        }
+    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
+    'Accept': 'application/json',
+    'Content-Type': 'application/json; charset=UTF-8',
+    'Origin': 'https://account.microsoft.com',
+    'Referer': 'https://account.microsoft.com/security/',
+    'Accept-Language': 'en-US,en;q=0.9',
+    'X-Requested-With': 'XMLHttpRequest',
+}
         
         check_data = {
             "username": f"+2{phone_number}",
