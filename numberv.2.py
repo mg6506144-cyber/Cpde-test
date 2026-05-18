@@ -225,19 +225,25 @@ async def process_single_number(phone_number: str) -> dict:
         }
         
         response = session.post(
-            Config.MICROSOFT_SEND_OTP_URL,
-            json=check_data,
-            headers=headers,
-            timeout=10
-        )
-        
-        if response.status_code == 200:
-            result["success"] = True
-            result["message"] = "OTP Sent Successfully"
-            logger.info(f"Success: {phone_number}")
-        else:
-            result["message"] = f"HTTP {response.status_code}"
-            logger.error(f"Failed: {phone_number}")
+    Config.MICROSOFT_SEND_OTP_URL,
+    json=check_data,
+    headers=headers,
+    timeout=10
+)
+
+print(response.status_code)
+print(response.text)
+
+try:
+    data = response.json()
+    print(data)
+except:
+    print("JSON Decode Failed")
+
+if response.status_code == 200:
+    result["success"] = True
+    result["message"] = "Request Accepted"
+    logger.info(f"Request OK: {phone_number}")
         
     except requests.exceptions.Timeout:
         result["message"] = "Timeout"
