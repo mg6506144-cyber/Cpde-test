@@ -1,6 +1,6 @@
 import os
 import sys
-import random
+import randomnsjd
 import asyncio
 import logging
 import json
